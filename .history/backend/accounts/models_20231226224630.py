@@ -25,24 +25,5 @@ class UserManager(BaseUserManager):
         user.save()
 
         return user
-
+    
     # スーパーユーザー作成メソッド
-    def create_superuser(self, email, password=None, **extra_fields):
-        user = self.create_user(email, password, **extra_fields)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-
-        return user
-
-# カスタムユーザーアカウントモデル
-class UserAbstract(AbstractBaseUser, PermissionsMixin):
-    uid = models.CharField('uid', max_length=30, unique=True)
-    email = models.EmailField('メールアドレス', max_length=255, unique=True)
-    name = models.CharField('名前', max_length=255)
-    avatar = models.ImageField(
-        upload_to='avatar', verbose_name='プロフィール画像', null=True, blank=True
-    )
-    introduction = models.TextField('自己紹介', null=True, blank=True)
-    updated_at = models.DateTimeField('更新日', auto_now=True)
-    created_at = models.DateTimeField('作成日', auto_now_add=True)

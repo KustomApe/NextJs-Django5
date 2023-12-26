@@ -44,5 +44,5 @@ class UserAbstract(AbstractBaseUser, PermissionsMixin):
         upload_to='avatar', verbose_name='プロフィール画像', null=True, blank=True
     )
     introduction = models.TextField('自己紹介', null=True, blank=True)
-    updated_at = models.DateTimeField('更新日', auto_now=True)
-    created_at = models.DateTimeField('作成日', auto_now_add=True)
+    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField('')
