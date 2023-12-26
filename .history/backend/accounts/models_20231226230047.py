@@ -67,9 +67,3 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
 # アカウントが作成された後に実行されるシグナルレシーバー
 @receiver(post_save, sender=UserAccount)
-def generate_random_uid(sender, instance, created, **kwargs):
-    # 新規作成時にランダムUIDを生成
-    if created:
-        hashids = Hashids(salt='xRXMT8XpzdUbDNM9qkv6JzUezU64D4Z', min_length=8)
-        instance.uid = hashids.encode(instance.id)
-        instance.save()

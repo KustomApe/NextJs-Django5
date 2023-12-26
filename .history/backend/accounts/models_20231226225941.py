@@ -38,7 +38,7 @@ class UserManager(BaseUserManager):
 
 
 # カスタムユーザーアカウントモデル
-class UserAccount(AbstractBaseUser, PermissionsMixin):
+class UserAbstract(AbstractBaseUser, PermissionsMixin):
     uid = models.CharField("uid", max_length=30, unique=True)
     email = models.EmailField("メールアドレス", max_length=255, unique=True)
     name = models.CharField("名前", max_length=255)
@@ -65,11 +65,4 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.name
 
-# アカウントが作成された後に実行されるシグナルレシーバー
-@receiver(post_save, sender=UserAccount)
-def generate_random_uid(sender, instance, created, **kwargs):
-    # 新規作成時にランダムUIDを生成
-    if created:
-        hashids = Hashids(salt='xRXMT8XpzdUbDNM9qkv6JzUezU64D4Z', min_length=8)
-        instance.uid = hashids.encode(instance.id)
-        instance.save()
+# アカウントが作成された後に実行されるシグナルレシーバ0-
