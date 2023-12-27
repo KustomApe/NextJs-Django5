@@ -55,21 +55,22 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     # ユーザーマネージャーと認証フィールドの設定
     objects = UserManager()
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["name"]
 
     class Meta:
-        verbose_name = 'ユーザーアカウント'
-        verbose_name_plural = 'ユーザーアカウント'
+        verbose_name = "ユーザーアカウント"
+        verbose_name_plural = "ユーザーアカウント"
 
     def __str__(self):
         return self.name
+
 
 # アカウントが作成された後に実行されるシグナルレシーバー
 @receiver(post_save, sender=UserAccount)
 def generate_random_uid(sender, instance, created, **kwargs):
     # 新規作成時にランダムUIDを生成
     if created:
-        hashids = Hashids(salt='xRXMT8XpzdUbDNM9qkv6JzUezU64D4Z', min_length=8)
+        hashids = Hashids(salt="xRXMT8XpzdUbDNM9qkv6JzUezU64D4Z", min_length=8)
         instance.uid = hashids.encode(instance.id)
         instance.save()
